@@ -2,7 +2,9 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/maykonlf/go-devkit/log"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
@@ -14,14 +16,16 @@ import (
 type Server struct {
 	ctx        context.Context
 	name       string
+	logger     log.LoggerI
 	mux        *runtime.ServeMux
 	gRPCServer *grpc.Server
 }
 
-func NewServer(ctx context.Context, name string) *Server {
+func NewServer(ctx context.Context, name string, logger log.LoggerI) *Server {
 	return &Server{
-		name:       name,
 		ctx:        ctx,
+		name:       name,
+		logger:     logger,
 		mux:        runtime.NewServeMux(),
 		gRPCServer: grpc.NewServer(),
 	}
@@ -41,6 +45,7 @@ func (s *Server) RegisterHTTPServerHandlersFunc(registerFunc func(ctx context.Co
 }
 
 func (s *Server) ListenAndServe(addr string) error {
+	s.logger.Info(fmt.Sprintf("server listening on %s...", addr))
 	return http.ListenAndServe(addr, s.getMuxHandler())
 }
 
