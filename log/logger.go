@@ -14,10 +14,10 @@ type LoggerI interface {
 	Fatal(msg string, keysAndValues ...interface{})
 }
 
-func NewLogger(level Level) LoggerI {
+func NewLogger(format Format, level Level) LoggerI {
 	config := zap.Config{
 		Level:            zap.NewAtomicLevelAt(levelMap[level]),
-		Encoding:         "json",
+		Encoding:         format.value(),
 		EncoderConfig:    EncoderConfig,
 		OutputPaths:      []string{"stdout"},
 		ErrorOutputPaths: []string{"stderr"},
@@ -25,11 +25,13 @@ func NewLogger(level Level) LoggerI {
 	logger, _ := config.Build()
 	return &Logger{
 		logger: logger.Sugar(),
+		level:  level,
 	}
 }
 
 type Logger struct {
 	logger *zap.SugaredLogger
+	level  Level
 }
 
 func (l *Logger) Debug(msg string, keysAndValues ...interface{}) {

@@ -16,16 +16,14 @@ import (
 type Server struct {
 	ctx        context.Context
 	name       string
-	logger     log.LoggerI
 	mux        *runtime.ServeMux
 	gRPCServer *grpc.Server
 }
 
-func NewServer(ctx context.Context, name string, logger log.LoggerI) *Server {
+func NewServer(ctx context.Context, name string) *Server {
 	return &Server{
 		ctx:        ctx,
 		name:       name,
-		logger:     logger,
 		mux:        runtime.NewServeMux(),
 		gRPCServer: grpc.NewServer(),
 	}
@@ -45,7 +43,7 @@ func (s *Server) RegisterHTTPServerHandlersFunc(registerFunc func(ctx context.Co
 }
 
 func (s *Server) ListenAndServe(addr string) error {
-	s.logger.Info(fmt.Sprintf("server listening on %s...", addr))
+	log.Info(fmt.Sprintf("server listening on %s...", addr))
 	return http.ListenAndServe(addr, s.getMuxHandler())
 }
 

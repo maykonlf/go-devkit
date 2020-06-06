@@ -5,7 +5,7 @@ import "go.uber.org/zap/zapcore"
 type Level zapcore.Level
 
 const (
-	DebugLevel = iota - 1
+	DebugLevel = iota
 	InfoLevel
 	WarnLevel
 	ErrorLevel
