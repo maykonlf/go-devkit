@@ -4,8 +4,9 @@ var (
 	logger LoggerI
 )
 
+//nolint:gochecknoinits proposital init() function to make package usage easier
 func init() {
-	logger = NewLogger(JsonFormat, InfoLevel)
+	logger = NewLogger(JSONFormat, InfoLevel)
 }
 
 func Config(format Format, level Level) {

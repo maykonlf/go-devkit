@@ -8,5 +8,5 @@ func (f Format) value() string {
 
 const (
 	ConsoleFormat Format = "console"
-	JsonFormat    Format = "json"
+	JSONFormat    Format = "json"
 )
