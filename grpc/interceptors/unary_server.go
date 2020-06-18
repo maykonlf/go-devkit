@@ -51,13 +51,16 @@ func UnaryServerLogger() grpc.UnaryServerInterceptor {
 		handler grpc.UnaryHandler) (interface{}, error) {
 		startTime := time.Now()
 		response, err := handler(ctx, req)
-		logRequest(req, info, startTime, response, err)
+		logUnaryRequest(req, info, startTime, response, err)
 
 		return response, err
 	}
 }
 
-func logRequest(req interface{}, info *grpc.UnaryServerInfo, startTime time.Time, response interface{}, err error) {
+func logUnaryRequest(req interface{},
+	info *grpc.UnaryServerInfo,
+	startTime time.Time,
+	response interface{}, err error) {
 	duration := time.Since(startTime)
 	code := grpc_logging.DefaultErrorToCode(err)
 	values := strings.Split(info.FullMethod, "/")
