@@ -1,12 +1,21 @@
 package log
 
 var (
-	logger LoggerI
+	logger  LoggerI
+	funcMap map[Level]func(msg string, keysAndValues ...interface{})
 )
 
-//nolint:gochecknoinits proposital init() function to make package usage easier
+//nolint:gochecknoinits // proposital init() function to make package usage easier
 func init() {
 	logger = NewLogger(JSONFormat, InfoLevel)
+	funcMap = map[Level]func(msg string, keysAndValues ...interface{}){
+		DebugLevel:  Debug,
+		InfoLevel:   Info,
+		WarnLevel:   Warn,
+		ErrorLevel:  Error,
+		DPanicLevel: DPanic,
+		PanicLevel:  Panic,
+	}
 }
 
 func Config(format Format, level Level) {
@@ -39,4 +48,8 @@ func DPanic(msg string, keysAndValues ...interface{}) {
 
 func Panic(msg string, keysAndValues ...interface{}) {
 	logger.Panic(msg, keysAndValues...)
+}
+
+func Log(level Level, msg string, keysAndValues ...interface{}) {
+	funcMap[level](msg, keysAndValues...)
 }

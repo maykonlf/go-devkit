@@ -3,14 +3,16 @@ package server
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"strings"
+
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/maykonlf/go-devkit/grpc/interceptors"
 	"github.com/maykonlf/go-devkit/log"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
-	"net/http"
-	"strings"
 )
 
 type Server struct {
@@ -21,11 +23,12 @@ type Server struct {
 }
 
 func NewServer(ctx context.Context, name string) *Server {
+	gRPCServer := grpc.NewServer(interceptors.UnaryServerInterceptors())
 	return &Server{
 		ctx:        ctx,
 		name:       name,
 		mux:        runtime.NewServeMux(),
-		gRPCServer: grpc.NewServer(),
+		gRPCServer: gRPCServer,
 	}
 }
 
