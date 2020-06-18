@@ -23,7 +23,7 @@ type Server struct {
 }
 
 func NewServer(ctx context.Context, name string) *Server {
-	gRPCServer := grpc.NewServer(interceptors.UnaryServerInterceptors())
+	gRPCServer := grpc.NewServer(interceptors.UnaryServerInterceptors(), interceptors.StreamServerInterceptors())
 	return &Server{
 		ctx:        ctx,
 		name:       name,
