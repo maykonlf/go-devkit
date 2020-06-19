@@ -47,7 +47,7 @@ func (s *Server) RegisterHTTPServerHandlersFunc(registerFunc func(ctx context.Co
 
 func (s *Server) ListenAndServe(addr string) error {
 	log.Info(fmt.Sprintf("server listening on %s...", addr))
-	return http.ListenAndServe(addr, s.getMuxHandler())
+	return http.ListenAndServe(addr, interceptors.HTTPLoggingMiddleware(s.getMuxHandler()))
 }
 
 func (s *Server) getMuxHandler() http.Handler {
