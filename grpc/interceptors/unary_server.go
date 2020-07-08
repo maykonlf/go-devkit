@@ -64,7 +64,7 @@ func logUnaryRequest(req interface{},
 	duration := time.Since(startTime)
 	code := grpc_logging.DefaultErrorToCode(err)
 	values := strings.Split(info.FullMethod, "/")
-	log.Log(getCodeLevel(code), "finished unary call with code with "+code.String(),
+	log.Log(getCodeLevel(code), "finished unary call with code "+code.String(),
 		"grpc_service", values[1], "grpc_method", values[2], "grpc_code", code.String(),
 		"grpc_request", req, "grpc_response", response, "grpc_start_time", startTime,
 		"grpc_deadline", startTime.Add(duration), "grpc_duration", duration.String(),
