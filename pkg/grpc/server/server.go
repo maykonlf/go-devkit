@@ -53,5 +53,6 @@ func (s *Server) Serve() {
 		log.Panic("failed to initialize listener", "port", s.port, "error", err)
 	}
 
+	log.Info(fmt.Sprintf("serving '%s' gRPC server on port %d...", s.name, s.port))
 	log.Panic("failed to serve", "error", s.gRPCServer.Serve(lis))
 }
