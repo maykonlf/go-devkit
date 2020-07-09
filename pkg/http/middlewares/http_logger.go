@@ -1,4 +1,4 @@
-package examples
+package middlewares
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/maykonlf/go-devkit/log"
+	"github.com/maykonlf/go-devkit/pkg/log"
 )
 
 type ResponseWriter struct {
@@ -41,7 +41,7 @@ func wrapResponseWriter(w http.ResponseWriter, defaultStatus int) *ResponseWrite
 	return &ResponseWriter{ResponseWriter: w, status: defaultStatus}
 }
 
-func HTTPLoggingMiddleware(next http.Handler) http.Handler {
+func HTTPLogging(next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		if strings.EqualFold(r.Method, "PRI") {
 			next.ServeHTTP(w, r)
