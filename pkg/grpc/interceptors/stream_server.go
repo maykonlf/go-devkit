@@ -7,7 +7,7 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_logging "github.com/grpc-ecosystem/go-grpc-middleware/logging"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	"github.com/maykonlf/go-devkit/log"
+	"github.com/maykonlf/go-devkit/pkg/log"
 	"google.golang.org/grpc"
 )
 

@@ -7,9 +7,9 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	"github.com/maykonlf/go-devkit/grpc/interceptors"
-	"github.com/maykonlf/go-devkit/grpc/protobuf"
-	"github.com/maykonlf/go-devkit/log"
+	"github.com/maykonlf/go-devkit/pkg/grpc/interceptors"
+	"github.com/maykonlf/go-devkit/pkg/grpc/protobuf"
+	"github.com/maykonlf/go-devkit/pkg/log"
 )
 
 type Server struct {

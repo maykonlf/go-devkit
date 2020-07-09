@@ -1,4 +1,4 @@
-package interceptors
+package examples
 
 import (
 	"bytes"
@@ -56,9 +56,7 @@ func HTTPLoggingMiddleware(next http.Handler) http.Handler {
 
 func httpLoggingMiddleware(w http.ResponseWriter, r *http.Request, next http.Handler) {
 	start := time.Now()
-	requestBody, _ := ioutil.ReadAll(r.Body)
-	_ = r.Body.Close()
-	r.Body = ioutil.NopCloser(bytes.NewBuffer(requestBody))
+	requestBody := readRequestBody(r)
 	responseWrapped := wrapResponseWriter(w, 200)
 
 	next.ServeHTTP(responseWrapped, r)
@@ -71,4 +69,11 @@ func httpLoggingMiddleware(w http.ResponseWriter, r *http.Request, next http.Han
 		"http_request_args", r.URL.Query(), "http_request_headers", r.Header,
 		"http_request_body", string(requestBody), "duration", duration.String(),
 	)
+}
+
+func readRequestBody(r *http.Request) []byte {
+	requestBody, _ := ioutil.ReadAll(r.Body)
+	_ = r.Body.Close()
+	r.Body = ioutil.NopCloser(bytes.NewBuffer(requestBody))
+	return requestBody
 }

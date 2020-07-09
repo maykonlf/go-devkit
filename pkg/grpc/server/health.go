@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/maykonlf/go-devkit/grpc/protobuf"
+	"github.com/maykonlf/go-devkit/pkg/grpc/protobuf"
 )
 
 func NewHealthServer(checks *[]func() error) protobuf.HealthServer {
