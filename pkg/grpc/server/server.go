@@ -51,12 +51,12 @@ func (s *Server) GetGRPCServer() *grpc.Server {
 	return s.gRPCServer
 }
 
-func (s *Server) Serve() {
+func (s *Server) Serve() error {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", s.port))
 	if err != nil {
 		log.Panic("failed to initialize listener", "port", s.port, "error", err)
 	}
 
 	log.Info(fmt.Sprintf("serving '%s' gRPC server on port %d...", s.name, s.port))
-	log.Panic("failed to serve", "error", s.gRPCServer.Serve(lis))
+	return s.gRPCServer.Serve(lis)
 }
