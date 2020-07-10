@@ -39,10 +39,10 @@ func (h *HealthServer) Watch(_ *protobuf.HealthCheckRequest, watchServer protobu
 
 func (h *HealthServer) getHealthCheckStatus(err error) protobuf.HealthCheckResponse_ServingStatus {
 	if err == nil {
-		return protobuf.HealthCheckResponse_NOT_SERVING
+		return protobuf.HealthCheckResponse_SERVING
 	}
 
-	return protobuf.HealthCheckResponse_SERVING
+	return protobuf.HealthCheckResponse_NOT_SERVING
 }
 
 func (h *HealthServer) runStreamCheck(watchServer protobuf.Health_WatchServer) error {
