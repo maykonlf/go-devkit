@@ -43,6 +43,10 @@ func (s *Server) AddHealthChecks(checks ...func() error) *Server {
 	return s
 }
 
+func (s *Server) RegisterGRPCHandlersFunc(registerFunc func (server *grpc.Server)) {
+	registerFunc(s.gRPCServer)
+}
+
 func (s *Server) GetGRPCServer() *grpc.Server {
 	return s.gRPCServer
 }
