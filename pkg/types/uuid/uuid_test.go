@@ -49,7 +49,7 @@ func TestMongoDBUUIDMarshaller(t *testing.T) {
 	assert.Nil(t, err)
 
 	var fetchedSample sample
-	err = c.FindOne(context.Background(), &bson.D{{"id", id}}).Decode(&fetchedSample)
+	err = c.FindOne(context.Background(), &bson.D{{Key: "id",Value: id}}).Decode(&fetchedSample)
 	assert.NotNil(t, err)
 	assert.Equal(t, id.String(), fetchedSample.ID.String())
 }
