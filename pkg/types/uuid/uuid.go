@@ -20,7 +20,7 @@ func (u UUID) MarshalBSONValue() (bsontype.Type, []byte, error) {
 	return bsontype.Binary, bsoncore.AppendBinary(nil, 4, u.UUID[:]), nil
 }
 
-func (u UUID) UnmarshalBSONValue(t bsontype.Type, raw []byte) error {
+func (u *UUID) UnmarshalBSONValue(t bsontype.Type, raw []byte) error {
 	if t != bsontype.Binary {
 		return errors.New("invalid format on unmarshall bson value")
 	}
