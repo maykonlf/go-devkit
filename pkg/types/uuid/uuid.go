@@ -33,3 +33,17 @@ func (u *UUID) UnmarshalBSONValue(t bsontype.Type, raw []byte) error {
 	copy(u.UUID[:], data)
 	return nil
 }
+
+func MustParse(s string) UUID {
+	return UUID{uuid.MustParse(s)}
+}
+
+func Parse(s string) (UUID, error) {
+	id, err := uuid.Parse(s)
+	return UUID{id}, err
+}
+
+func FromBytes(b []byte) (UUID, error) {
+	id, err := uuid.FromBytes(b)
+	return UUID{id}, err
+}
